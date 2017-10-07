@@ -7,10 +7,12 @@ http.createServer(function (req, res) {
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
       var oldpath = files.filetoupload.path;
-      var newpath = 'C:/Users/Your Name/' + files.filetoupload.name;
+      var newpath = '/home/pi/code/pi3/imagesout/' + files.filetoupload.name;
       fs.rename(oldpath, newpath, function (err) {
         if (err) throw err;
+        res.writeHead(200, {'Content-Type' : 'text/html'});
         res.write('File uploaded and moved!');
+        res.write('<a href="http://localhost:8080"> Click here to submit another image</a>');
         res.end();
       });
  });
